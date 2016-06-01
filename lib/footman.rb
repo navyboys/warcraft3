@@ -2,15 +2,15 @@
 
 class Footman < Unit
 
-  def initialize
-    super(60, 10)
+  def initialize(hp = 60, ap = 10)
+    super(hp, ap)
   end
 
   def attack!(target)
-    target.damage(10)
-  end
-
-  def damage(hp)
-    @health_points -= hp
+    if target.is_a? Barracks
+      target.damage(5)
+    else
+      target.damage(10)
+    end
   end
 end

@@ -1,9 +1,24 @@
 class Barracks
-  attr_accessor :gold, :food
+  attr_reader :gold, :food, :lumber, :health_points
 
   def initialize
     @gold = 1000
     @food = 80
+    @lumber = 500
+    @health_points = 500
+  end
+
+  def damage(hp)
+    raise StandardError, 'Not a Fixnum' unless hp.is_a?(Fixnum)
+    @health_points -= hp
+  end
+
+  def build_siege_engine
+    return unless can_build_siege_engine?
+    @gold -= 200
+    @food -= 3
+    @lumber -= 60
+    SiegeEngine.new
   end
 
   def train_footman
@@ -20,19 +35,15 @@ class Barracks
     Peasant.new
   end
 
+  def can_build_siege_engine?
+    food >= 3 && gold >= 200 && lumber >= 60
+  end
+
   def can_train_footman?
-    if food < 2 || gold < 135
-      false
-    else
-      true
-    end
+    food >= 2 && gold >= 135
   end
 
   def can_train_peasant?
-    if food < 5 || gold < 90
-      false
-    else
-      true
-    end
+    food >= 5 && gold >= 90
   end
 end

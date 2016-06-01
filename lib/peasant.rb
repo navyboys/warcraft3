@@ -1,5 +1,5 @@
 class Peasant < Unit
-  def initialize
-    super(35, 0)
+  def initialize(hp = 35, ap = 0)
+    super(hp, ap)
   end
 end
